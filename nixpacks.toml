@@ -1,0 +1,2 @@
+[variables]
+NEXT_PUBLIC_API_BASE_URL = "https://wesal-api.apps.taqat.academy/api/v1"
