@@ -90,9 +90,11 @@ function AiAssistantFab({
     >
       <span className="wesal-ai-fab-aura" aria-hidden="true" />
       <span className="wesal-ai-fab-ring" aria-hidden="true" />
-      <span className="wesal-ai-fab-tab" aria-hidden="true" key={greetIndex}>
-        {t(GREET_KEYS[greetIndex])}
-      </span>
+      {!open ? (
+        <span className="wesal-ai-fab-tab" aria-hidden="true" key={greetIndex}>
+          {t(GREET_KEYS[greetIndex])}
+        </span>
+      ) : null}
       <span className="relative z-[1] flex h-full w-full items-end justify-center">
         <AiAssistantAvatar pose="full" />
         <span className="wesal-ai-fab-scan" aria-hidden="true" />

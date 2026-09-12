@@ -1,42 +1,45 @@
 "use client";
 
-import Link from "next/link";
-import type { ReactNode } from "react";
-import ProfileView from "@/components/profile/ProfileView";
+import { useRouter } from "next/navigation";
+import { useEffect, type ReactNode } from "react";
+import { HALL_OWNER_MANAGEMENT_PATH } from "@/lib/account-profile-path";
 import { useUserIdentity } from "@/hooks/useUserIdentity";
-import { useT } from "@/i18n";
+
+const LANDING_PATH = "/";
 
 export default function RegularUserProfileGuard({ children }: { children: ReactNode }) {
-  const t = useT();
+  const router = useRouter();
   const { ready, authenticated, isHallOwner } = useUserIdentity();
 
-  if (!ready) {
-    return (
-      <div
-        className="h-72 max-w-xl animate-pulse rounded-2xl bg-white shadow-[0_12px_30px_rgba(90,55,45,0.08)]"
-        aria-busy="true"
-        data-testid="profile-loading"
-      />
-    );
-  }
+  useEffect(() => {
+    if (!ready) return;
 
-  if (!authenticated) {
-    return (
-      <section
-        className="max-w-xl rounded-2xl bg-white p-6 shadow-[0_12px_30px_rgba(90,55,45,0.08)]"
-        data-testid="profile-unauthorized"
-      >
-        <h1 className="text-2xl font-bold text-[var(--wesal-maroon)]">{t("profile.title")}</h1>
-        <p className="mt-3 text-sm leading-7 text-[var(--wesal-muted)]">{t("profile.loginRequired")}</p>
-        <Link href="/login?redirect=/profile" className="btn-primary mt-5">
-          {t("profile.goLogin")}
-        </Link>
-      </section>
-    );
-  }
+    if (!authenticated) {
+      router.replace(LANDING_PATH);
+      return;
+    }
 
-  if (isHallOwner) {
-    return <ProfileView />;
+    if (isHallOwner) {
+      router.replace(HALL_OWNER_MANAGEMENT_PATH);
+    }
+  }, [ready, authenticated, isHallOwner, router]);
+
+  if (!ready || !authenticated || isHallOwner) {
+    return (
+      <div className="seeker-app-guard">
+        <div
+          className="h-72 max-w-xl animate-pulse rounded-2xl bg-white shadow-[0_12px_30px_rgba(90,55,45,0.08)]"
+          aria-busy="true"
+          data-testid={
+            !ready
+              ? "profile-loading"
+              : !authenticated
+                ? "profile-guest-redirect"
+                : "profile-owner-redirect"
+          }
+        />
+      </div>
+    );
   }
 
   return children;

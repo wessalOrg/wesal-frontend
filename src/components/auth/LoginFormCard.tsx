@@ -52,7 +52,9 @@ export default function LoginFormCard({
   const [pending, setPending] = useState(false);
 
   const canSubmit =
-    identifier.trim().length > 0 && password.length > 0 && !pending;
+    identifier.trim().length > 0 &&
+    password.length > 0 &&
+    !pending;
 
   const localizeApiFieldMessage = (field: FieldKey, message: string): string => {
     const lower = message.toLowerCase();
@@ -163,7 +165,7 @@ export default function LoginFormCard({
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (pending) return;
+    if (pending || isDemoBusy) return;
 
     const errors = validateAll();
     setFieldErrors(errors);

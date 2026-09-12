@@ -2,11 +2,13 @@
 
 import MessageComposer from "@/components/messages/MessageComposer";
 import ThreadMessageItem from "@/components/messages/ThreadMessageItem";
+import { useUiLang } from "@/components/layout/LanguageProvider";
 import { useRejectionArrival } from "@/hooks/useRejectionArrival";
 import { useRetryingMessages } from "@/hooks/useRetryingMessages";
 import { useThreadScroll } from "@/hooks/useThreadScroll";
 import { useT } from "@/i18n";
 import { isBookingRejectionContent } from "@/lib/booking-rejection-message";
+import { conversationHallLabel } from "@/lib/conversation-display";
 import { isSameUserId } from "@/lib/current-user";
 import type { MessageThread, ThreadStatus } from "@/types/messages";
 
@@ -48,6 +50,8 @@ export default function MessageThreadView({
   variant = "page",
 }: MessageThreadViewProps) {
   const t = useT();
+  const lang = useUiLang();
+  const localizedHallName = thread ? conversationHallLabel(thread, lang) : "";
   const messages = thread?.messages ?? [];
   const lastMessage = messages[messages.length - 1];
   const { scrollerRef, unseenCount, unseenRejection, onScroll, scrollToLatest } = useThreadScroll(
@@ -142,7 +146,7 @@ export default function MessageThreadView({
                   message={message}
                   own={isSameUserId(message.senderUserId, currentUserId)}
                   retrying={isRetrying(message)}
-                  hallName={thread?.hallName ?? ""}
+                  hallName={localizedHallName}
                   arriving={arrivingId === message.id}
                   onRetrySend={(id) => {
                     markRetrying(id);

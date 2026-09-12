@@ -16,7 +16,7 @@ export default function AuthMinimalHeader() {
           className="flex min-w-0 shrink-0 items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--wesal-maroon)]/35"
           aria-label={t("brand.name")}
         >
-          <WesalLogo className="h-9 w-9 shrink-0 sm:h-10 sm:w-10" variant="brand" />
+          <WesalLogo className="h-10 w-auto shrink-0 sm:h-11 sm:w-auto" variant="brand" />
           <span className="wesal-auth-brand-name truncate text-xl font-bold sm:text-2xl">
             {t("brand.name")}
           </span>

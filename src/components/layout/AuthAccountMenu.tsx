@@ -14,6 +14,10 @@ import { useOptionalMessagesInbox } from "@/components/messages/MessagesInboxPro
 import LogoutConfirmDialog from "@/components/auth/LogoutConfirmDialog";
 import { useUserIdentity } from "@/hooks/useUserIdentity";
 import { useT } from "@/i18n";
+import {
+  getAccountProfilePath,
+  isAccountProfileActive,
+} from "@/lib/account-profile-path";
 
 type AuthAccountMenuProps = {
   stacked?: boolean;
@@ -63,6 +67,8 @@ export default function AuthAccountMenu({
   const notificationsLabel = t("nav.notifications");
   const logoutLabel = t("nav.logout");
   const menuLabel = t("nav.accountMenu");
+  const profileHref = getAccountProfilePath(identity.role);
+  const profileActive = isAccountProfileActive(pathname, identity.role);
 
   useEffect(() => {
     setOpen(false);
@@ -129,10 +135,10 @@ export default function AuthAccountMenu({
 
       <div className="wesal-account-menu-list" role="none">
         <MenuLink
-          href="/profile"
+          href={profileHref}
           label={profileLabel}
           description={t("nav.profileHint")}
-          active={pathname === "/profile" || pathname.startsWith("/profile/")}
+          active={profileActive}
           onClick={go}
         >
           <ProfileIcon />
