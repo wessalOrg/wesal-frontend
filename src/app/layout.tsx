@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import { AiAssistantProvider } from "@/components/assistant/AiAssistantProvider";
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import HallOwnerAudioAlerts from "@/components/halls/notifications/HallOwnerAudioAlerts";
+import { AudioPermissionProvider } from "@/hooks/useAudioPermission";
 import MessagesInboxPanelHost from "@/components/messages/MessagesInboxPanelHost";
 import { MessagesInboxProvider } from "@/components/messages/MessagesInboxProvider";
 import { UserProfileProvider } from "@/components/profile/UserProfileProvider";
@@ -41,14 +43,17 @@ export default function RootLayout({
       </head>
       <body className={`${cairo.variable} ${cairo.className} min-h-svh overflow-x-hidden font-sans`}>
         <AuthProvider>
-          <UserProfileProvider>
-            <LanguageProvider>
-              <MessagesInboxProvider>
-                <AiAssistantProvider>{children}</AiAssistantProvider>
-                <MessagesInboxPanelHost />
-              </MessagesInboxProvider>
-            </LanguageProvider>
-          </UserProfileProvider>
+          <AudioPermissionProvider>
+            <HallOwnerAudioAlerts />
+            <UserProfileProvider>
+              <LanguageProvider>
+                <MessagesInboxProvider>
+                  <AiAssistantProvider>{children}</AiAssistantProvider>
+                  <MessagesInboxPanelHost />
+                </MessagesInboxProvider>
+              </LanguageProvider>
+            </UserProfileProvider>
+          </AudioPermissionProvider>
         </AuthProvider>
       </body>
     </html>

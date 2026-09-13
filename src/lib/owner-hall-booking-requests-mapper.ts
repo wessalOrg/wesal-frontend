@@ -6,18 +6,19 @@ import type { OwnerHallBookingRequest } from "@/types/owner-hall-booking-request
 /**
  * Assumed owner booking-request list contract (US-OWNER-09) until OpenAPI lands.
  *
- * GET /api/v1/owner/halls/{hallId}/booking-requests
+ * GET /api/v1/owner/halls/{hallId}/bookings (wesal-api US-OWNER-09)
  * Auth: Bearer (Hall Owner + owns hall)
  *
- * 200: OwnerHallBookingRequestDto[] | { items?: ... } | { requests?: ... }
+ * 200: OwnerBookingRequestDto[] | { items?: ... } | { requests?: ... }
  * 401 unauthorized · 403 forbidden · 404 hall not found / inaccessible
  */
 export const OWNER_HALL_BOOKING_REQUESTS_PATH = (hallId: string) =>
-  `/owner/halls/${encodeURIComponent(hallId)}/booking-requests`;
+  `/owner/halls/${encodeURIComponent(hallId)}/bookings`;
 
 export type OwnerHallBookingRequestDto = {
   id?: string | null;
   bookingId?: string | null;
+  bookingRequestId?: string | null;
   hallId?: string | null;
   requesterName?: string | null;
   requesterFullName?: string | null;
@@ -26,14 +27,18 @@ export type OwnerHallBookingRequestDto = {
   date?: string | null;
   requestedDate?: string | null;
   period?: string | number | null;
+  requestedPeriod?: string | number | null;
   periods?: Array<string | number | null> | null;
   bookingPeriods?: Array<string | number | null> | null;
   status?: string | number | null;
   createdAt?: string | null;
+  requestedAt?: string | null;
 };
 
 function readId(dto: OwnerHallBookingRequestDto): string | null {
-  const value = String(dto.id ?? dto.bookingId ?? "").trim();
+  const value = String(
+    dto.bookingRequestId ?? dto.bookingId ?? dto.id ?? "",
+  ).trim();
   return value || null;
 }
 
@@ -82,7 +87,7 @@ function readPeriods(dto: OwnerHallBookingRequestDto): BookingPeriodType[] {
     }
     if (periods.length > 0) return periods;
   }
-  const single = parsePeriod(dto.period);
+  const single = parsePeriod(dto.requestedPeriod ?? dto.period);
   return single ? [single] : [];
 }
 
@@ -104,7 +109,11 @@ export function mapOwnerHallBookingRequestDto(
     date,
     periods,
     status: parseBookingStatus(dto.status),
-    createdAt: dto.createdAt ? String(dto.createdAt).trim() || null : null,
+    createdAt: dto.createdAt
+      ? String(dto.createdAt).trim() || null
+      : dto.requestedAt
+        ? String(dto.requestedAt).trim() || null
+        : null,
   };
 }
 

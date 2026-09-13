@@ -12,6 +12,7 @@ import {
 } from "react";
 import { useOptionalMessagesInbox } from "@/components/messages/MessagesInboxProvider";
 import LogoutConfirmDialog from "@/components/auth/LogoutConfirmDialog";
+import AudioControlToggle from "@/components/halls/notifications/AudioControlToggle";
 import { useUserIdentity } from "@/hooks/useUserIdentity";
 import { useT } from "@/i18n";
 import {
@@ -56,6 +57,7 @@ export default function AuthAccountMenu({
   const [confirmLogout, setConfirmLogout] = useState(false);
   const identity = useUserIdentity();
   const inbox = useOptionalMessagesInbox();
+  const showAudio = identity.isHallOwner;
 
   const displayName = formatGreetingName(
     identity.displayName,
@@ -214,7 +216,9 @@ export default function AuthAccountMenu({
         >
           {hello} {displayName}
         </p>
+        {!stacked && showAudio ? <AudioControlToggle variant="nav" /> : null}
       </div>
+      {stacked && showAudio ? <AudioControlToggle variant="stacked" /> : null}
 
       {open ? menu : null}
 

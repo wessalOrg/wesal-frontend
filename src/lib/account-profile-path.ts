@@ -1,4 +1,5 @@
 import { isHallOwnerRole } from "@/lib/account-role";
+import { resolveAuthRedirect } from "@/lib/auth-storage";
 import type { WesalRole } from "@/types/session";
 
 /** Regular User profile portal. */
@@ -29,6 +30,24 @@ export function getAccountProfilePath(
   return isHallOwnerRole(role)
     ? HALL_OWNER_MANAGEMENT_PATH
     : REGULAR_PROFILE_PATH;
+}
+
+/**
+ * After login, Hall Owners always enter `/owner`. Seeker booking redirects
+ * stay on the public hall path; they are not used for owners.
+ */
+export function resolveLoginDestination(
+  role: WesalRole | null | undefined,
+  redirectParam?: string,
+  actionParam?: string,
+): string {
+  if (isHallOwnerRole(role)) {
+    const requested = resolveAuthRedirect(redirectParam, actionParam);
+    return requested.startsWith(HALL_OWNER_MANAGEMENT_PATH)
+      ? requested
+      : HALL_OWNER_MANAGEMENT_PATH;
+  }
+  return resolveAuthRedirect(redirectParam, actionParam);
 }
 
 export function isHallOwnerManagementPath(pathname: string): boolean {

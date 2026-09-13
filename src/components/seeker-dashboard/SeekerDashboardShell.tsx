@@ -141,6 +141,8 @@ export default function SeekerDashboardShell({
                 sidebarId={SIDEBAR_ID}
                 onOpen={openSidebar}
                 onClose={closeSidebar}
+                openLabelKey="seeker.openMenu"
+                closeLabelKey="seeker.closeMenu"
               />
             </div>
             <div className="min-w-0">

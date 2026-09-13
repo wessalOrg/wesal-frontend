@@ -1,3 +1,4 @@
+import { roleFromAccountSignals } from "@/lib/account-role";
 import api from "@/lib/api";
 
 export type RegisterPayload = {
@@ -47,6 +48,7 @@ type LoginResultDto = LoginResult & {
   Token?: string;
   AccessToken?: string;
   Role?: string;
+  AccountType?: string;
   FullName?: string;
   Id?: string;
 };
@@ -56,13 +58,14 @@ function asText(value: unknown): string {
 }
 
 function mapLoginResult(data: LoginResultDto): LoginResult {
+  const accountType = asText(data.accountType || data.AccountType);
   return {
     id: asText(data.id || data.Id || data.userId),
     fullName: asText(data.fullName || data.FullName || data.name),
     email: asText(data.email),
     phoneNumber: asText(data.phoneNumber || data.phone),
-    accountType: asText(data.accountType),
-    role: asText(data.role || data.Role),
+    accountType,
+    role: roleFromAccountSignals(asText(data.role || data.Role), accountType) ?? "",
     token: asText(data.token || data.Token || data.accessToken || data.AccessToken),
   };
 }

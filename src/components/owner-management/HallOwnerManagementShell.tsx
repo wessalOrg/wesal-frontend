@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import AudioControlToggle from "@/components/halls/notifications/AudioControlToggle";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import MobileSidebarTrigger from "@/components/owner-management/MobileSidebarTrigger";
 import OwnerBookingNotificationsPopover from "@/components/owner-management/OwnerBookingNotificationsPopover";
@@ -137,6 +138,7 @@ export default function HallOwnerManagementShell({
 
           <div className="seeker-dash-topbar-end">
             <LanguageSwitcher iconOnly className="seeker-dash-lang" />
+            <AudioControlToggle variant="nav" />
             <OwnerBookingNotificationsPopover />
             <Link href={OWNER_ACCOUNT_PATH} className="seeker-dash-userchip" prefetch>
               <span className="seeker-dash-userchip-avatar" aria-hidden="true">

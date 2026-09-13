@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import HallNotificationsView from "@/components/halls/notifications/HallNotificationsView";
+import OwnerAvailabilitySchedule from "@/components/halls/OwnerAvailabilitySchedule";
 import HallManagementSectionNav from "@/components/owner-management/halls/HallManagementSectionNav";
-import OwnerBookingRequestList from "@/components/owner-management/halls/OwnerBookingRequestList";
-import { useHallBookingRequests } from "@/hooks/useHallBookingRequests";
 import { useSelectedOwnerHall } from "@/hooks/useSelectedOwnerHall";
 import { HALL_OWNER_PROFILE_PATH } from "@/lib/account-profile-path";
 import { useT } from "@/i18n";
@@ -14,24 +14,14 @@ type HallOwnerHallNotificationsViewProps = {
 
 /**
  * Hall-scoped booking request Notifications (US-OWNER-09).
- * Data comes only from useHallBookingRequests(hallId).
+ * Accept/reject live in HallNotificationsView; publish/delete on the schedule.
  */
 export default function HallOwnerHallNotificationsView({
   hallId,
 }: HallOwnerHallNotificationsViewProps) {
   const t = useT();
-  const { isListReady, isKnownOwnedHall, selectedHall, isListLoading } =
+  const { isListReady, isKnownOwnedHall, selectedHall } =
     useSelectedOwnerHall();
-
-  const {
-    requests,
-    isLoading,
-    isError,
-    errorKey,
-    isRefreshing,
-    isEmpty,
-    refetch,
-  } = useHallBookingRequests(hallId);
 
   if (isListReady && !isKnownOwnedHall) {
     return (
@@ -75,66 +65,16 @@ export default function HallOwnerHallNotificationsView({
       </header>
 
       <div className="min-w-0 rounded-2xl border border-[var(--wesal-border)] bg-white p-4 sm:p-6">
-        <div className="mb-4 flex min-w-0 flex-wrap items-baseline justify-between gap-2">
+        <div className="mb-4 min-w-0">
           <h3 className="break-words text-base font-extrabold text-[var(--wesal-maroon)]">
             {t("owner.management.notifications.title")}
           </h3>
-          {isRefreshing ? (
-            <span className="text-xs font-semibold text-[var(--wesal-muted)]" role="status">
-              {t("owner.management.notifications.refreshing")}
-            </span>
-          ) : null}
         </div>
+        <HallNotificationsView hallId={hallId} />
+      </div>
 
-        {isLoading || (isListLoading && !isListReady) ? (
-          <div
-            className="owner-booking-request-skeleton space-y-3"
-            aria-busy="true"
-            data-testid="owner-hall-notifications-loading"
-          >
-            <div className="h-24 animate-pulse rounded-2xl bg-[var(--wesal-pink-soft)]" />
-            <div className="h-24 animate-pulse rounded-2xl bg-[var(--wesal-pink-soft)]" />
-            <p className="sr-only">{t("common.loading")}</p>
-          </div>
-        ) : null}
-
-        {isError ? (
-          <div
-            className="min-w-0 rounded-2xl border border-[var(--wesal-border)] bg-[var(--wesal-pink-soft)] px-4 py-3"
-            role="alert"
-            data-testid="owner-hall-notifications-error"
-          >
-            <p className="break-words text-sm text-[var(--wesal-maroon)]">
-              {t(errorKey ?? "owner.management.notifications.errors.loadFailed")}
-            </p>
-            <button
-              type="button"
-              className="btn-outline mt-3 min-h-11 w-full sm:w-auto"
-              onClick={() => refetch()}
-              data-testid="owner-hall-notifications-retry"
-            >
-              {t("common.retry")}
-            </button>
-          </div>
-        ) : null}
-
-        {!isLoading && !isError && isEmpty ? (
-          <p
-            className="break-words rounded-2xl border border-[var(--wesal-border)] bg-[var(--wesal-pink-soft)] px-4 py-5 text-sm leading-relaxed text-[var(--wesal-muted)]"
-            data-testid="owner-hall-notifications-empty"
-          >
-            {t("owner.management.notifications.empty")}
-          </p>
-        ) : null}
-
-        {!isLoading && !isError && requests.length > 0 ? (
-          <div
-            className={isRefreshing ? "pointer-events-none opacity-60" : undefined}
-            aria-busy={isRefreshing || undefined}
-          >
-            <OwnerBookingRequestList requests={requests} />
-          </div>
-        ) : null}
+      <div className="min-w-0 rounded-2xl border border-[var(--wesal-border)] bg-white p-4 sm:p-6">
+        <OwnerAvailabilitySchedule hallId={hallId} hallName={hallName} />
       </div>
     </section>
   );
