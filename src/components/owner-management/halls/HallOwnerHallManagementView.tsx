@@ -1,12 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import OwnerAvailabilityCalendar from "@/components/halls/owner-availability/OwnerAvailabilityCalendar";
+import OwnerDeleteHallAction from "@/components/halls/OwnerDeleteHallAction";
+import OwnerSubscriptionStatus from "@/components/halls/subscription/OwnerSubscriptionStatus";
 import HallApprovalStatusBadge from "@/components/owner-management/halls/HallApprovalStatusBadge";
 import HallManagementForm from "@/components/owner-management/halls/HallManagementForm";
 import HallManagementSectionNav from "@/components/owner-management/halls/HallManagementSectionNav";
 import { useHallOwnerHallManagement } from "@/hooks/useHallOwnerHallManagement";
 import { useSelectedOwnerHall } from "@/hooks/useSelectedOwnerHall";
-import { HALL_OWNER_PROFILE_PATH } from "@/lib/account-profile-path";
+import {
+  HALL_OWNER_HALLS_PATH,
+  HALL_OWNER_PROFILE_PATH,
+} from "@/lib/account-profile-path";
 import { useT } from "@/i18n";
 
 type HallOwnerHallManagementViewProps = {
@@ -21,6 +28,7 @@ export default function HallOwnerHallManagementView({
   hallId,
 }: HallOwnerHallManagementViewProps) {
   const t = useT();
+  const router = useRouter();
   const { isListReady, isListLoading, isKnownOwnedHall, selectedHall } =
     useSelectedOwnerHall();
 
@@ -162,6 +170,18 @@ export default function HallOwnerHallManagementView({
           onRemoveExistingPhoto={removeExistingPhoto}
           onSubmit={() => {
             void submit();
+          }}
+        />
+      </div>
+
+      <OwnerSubscriptionStatus hallId={hallId} hallName={headerName} />
+      <OwnerAvailabilityCalendar hallId={hallId} />
+      <div className="min-w-0 rounded-2xl border border-[var(--wesal-border)] bg-white p-4 sm:p-6">
+        <OwnerDeleteHallAction
+          hallId={hallId}
+          hallName={headerName}
+          onDeleted={() => {
+            router.replace(HALL_OWNER_HALLS_PATH);
           }}
         />
       </div>

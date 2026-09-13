@@ -454,6 +454,8 @@ const en: MessageCatalog = {
   "seeker.title": "Seeker dashboard",
   "seeker.appTitle": "Seeker dashboard",
   "seeker.sidebarLabel": "Seeker account sections",
+  "seeker.openMenu": "Menu",
+  "seeker.closeMenu": "Close menu",
   "seeker.sidebarTagline": "All beautiful moments start with Wesal ..",
   "seeker.nav.home": "Home",
   "seeker.nav.account": "Personal profile",
@@ -828,6 +830,211 @@ const en: MessageCatalog = {
     "You do not have access to booking requests for this hall.",
   "owner.management.notifications.errors.notFound":
     "This hall was not found or is inaccessible.",
+
+  "owner.notifications.action": "Notifications",
+  "owner.notifications.title": "Booking requests",
+  "owner.notifications.sectionHint":
+    "Each request for this hall appears here. Open another hall to see that hall's requests.",
+  "owner.notifications.close": "Close notifications",
+  "owner.notifications.empty": "No booking requests for this hall",
+  "owner.notifications.emptyHint":
+    "When a hall seeker sends a request, it will appear here with the date and period.",
+  "owner.notifications.loading": "Loading booking requests",
+  "owner.notifications.errorTitle": "Could not show requests",
+  "owner.notifications.requester": "Requester",
+  "owner.notifications.date": "Requested date",
+  "owner.notifications.periods": "Period",
+  "owner.notifications.valueMissing": "Unavailable",
+  "owner.notifications.accept": "Accept request",
+  "owner.notifications.accepting": "Accepting…",
+  "owner.notifications.reject": "Reject request",
+  "owner.notifications.rejecting": "Rejecting…",
+  "owner.notifications.rejectTitle": "Reject booking request",
+  "owner.notifications.rejectHint":
+    "A rejection reason is required and will be shown to the requester.",
+  "owner.notifications.rejectReason": "Rejection reason",
+  "owner.notifications.rejectPlaceholder": "Write the rejection reason…",
+  "owner.notifications.rejectConfirm": "Confirm rejection",
+  "owner.notifications.status.pendingDeposit": "Awaiting deposit confirmation",
+  "owner.notifications.status.fullyBooked": "Fully booked",
+  "owner.notifications.group.pending": "Awaiting acceptance",
+  "owner.notifications.group.depositPending": "Awaiting deposit confirmation",
+  "owner.notifications.group.handled": "Closed requests",
+  "owner.notifications.depositHint":
+    "Booking is currently proceeding through deposit confirmation.",
+  "owner.notifications.cancelledBanner":
+    "The customer cancelled this request before it was accepted.",
+  "owner.notifications.conflictBanner":
+    "This request can no longer be accepted because its status changed.",
+  "owner.notifications.finalizedHint": "This request was already handled.",
+  "owner.schedule.title": "Hall schedule",
+  "owner.schedule.hint":
+    "A slot awaiting deposit stays reserved here and is not marked fully booked until confirmation completes.",
+  "owner.schedule.depositPending": "Deposit pending",
+  "owner.schedule.depositPendingHint":
+    "Booking is currently proceeding through deposit confirmation.",
+  "owner.schedule.booked": "Fully booked",
+  "owner.schedule.available": "Available",
+  "owner.schedule.publish": "Publish booking",
+  "owner.schedule.publishing": "Publishing…",
+  "owner.schedule.published": "Booked / Published",
+  "owner.schedule.publishableTitle": "Bookings ready to publish",
+  "owner.schedule.publishHint":
+    "Publishing marks the period as booked on the schedule only after the request succeeds.",
+  "owner.schedule.publishedHint": "This period is booked after publication.",
+  "owner.schedule.conflictCallout":
+    "Could not publish because the period is no longer available.",
+  "owner.schedule.failureCallout": "Could not publish the booking. Please try again.",
+  "owner.schedule.delete": "Delete booking",
+  "owner.schedule.deleting": "Deleting…",
+  "owner.schedule.deleteTitle": "Delete this booking?",
+  "owner.schedule.deleteHint":
+    "This action cannot be undone. The period will become available again after a successful deletion.",
+  "owner.schedule.deleteConfirm":
+    "You are about to delete the following booking from the hall schedule.",
+  "owner.schedule.deleteHall": "Hall",
+  "owner.schedule.deleteConfirmAction": "Delete booking",
+  "owner.schedule.deleteConflictCallout":
+    "This booking cannot be deleted in its current state.",
+  "owner.schedule.deleteFailureCallout":
+    "Could not delete the booking. Please try again.",
+  "owner.schedule.deletedLive": "Booking deleted.",
+  "owner.schedule.alreadyUnavailable":
+    "This booking is no longer available to delete.",
+  "owner.hall.delete": "Delete hall",
+  "owner.hall.deleting": "Deleting hall…",
+  "owner.hall.deleteTitle": "Delete this hall?",
+  "owner.hall.deleteHint":
+    "This action cannot be undone. The hall is removed from your account only after the request succeeds.",
+  "owner.hall.deleteConfirm":
+    "You are about to delete the following hall. Confirm the name and ID before continuing.",
+  "owner.hall.deleteName": "Hall name",
+  "owner.hall.deleteId": "Hall ID",
+  "owner.hall.deleteConfirmAction": "Delete hall",
+  "owner.hall.deletedLive": "Hall deleted.",
+  "owner.hall.deleteConflictCallout":
+    "This hall cannot be deleted in its current state.",
+  "owner.hall.deleteFailureCallout":
+    "Could not delete the hall. Please try again.",
+  "owner.hall.alreadyUnavailable": "This hall is no longer available to delete.",
+  "owner.subscription.title": "Subscription status",
+  "owner.subscription.hint":
+    "This status is for the selected hall only, as returned by the server.",
+  "owner.subscription.active": "Active / Paid",
+  "owner.subscription.unpaid": "Unpaid / Payment pending",
+  "owner.subscription.expired": "Expired",
+  "owner.subscription.locked": "Locked",
+  "owner.subscription.nextBilling": "Next billing date",
+  "owner.subscription.expires": "Expiration date",
+  "owner.subscription.billingDate": "Billing date",
+  "owner.subscription.noActiveBilling":
+    "No active billing date exists for this status.",
+  "owner.subscription.activeHint": "Subscription is active for this hall.",
+  "owner.subscription.unpaidHint":
+    "Payment is pending. An active billing date is shown only if the server returns one.",
+  "owner.subscription.expiredHint":
+    "This subscription has expired. Renew to restore full hall management.",
+  "owner.subscription.lockedHint":
+    "Management operations are restricted until the server changes this status.",
+  "owner.subscription.errorTitle": "Could not show subscription status",
+  "errors.owner.subscription.unauthorized":
+    "Log in to view this hall's subscription.",
+  "errors.owner.subscription.forbidden":
+    "Only the hall owner can view subscription status.",
+  "errors.owner.subscription.notFound": "No subscription was found for this hall.",
+  "errors.owner.subscription.load":
+    "Could not load subscription status. Please try again.",
+  "owner.availability.title": "Availability calendar",
+  "owner.availability.hint":
+    "Each period updates on its own. The saved state is whatever the server returns.",
+  "owner.availability.prevMonth": "Previous month",
+  "owner.availability.nextMonth": "Next month",
+  "owner.availability.available": "Available",
+  "owner.availability.unavailable": "Unavailable",
+  "owner.availability.booked": "Booked",
+  "owner.availability.saving": "Saving…",
+  "owner.availability.toggleLabel": "Toggle {period} on {day}",
+  "owner.availability.bookedLabel": "{period} on {day} is booked and locked",
+  "owner.availability.bookedHint": "This period is booked and cannot be changed.",
+  "owner.availability.blockedHint": "This period is blocked. Tap to make it available.",
+  "owner.availability.retryPeriod": "Retry",
+  "owner.availability.empty": "No availability days for this month.",
+  "owner.availability.errorTitle": "Could not load the availability calendar",
+  "errors.owner.availability.unauthorized":
+    "Log in to manage this hall's availability.",
+  "errors.owner.availability.forbidden":
+    "Only the hall owner can update availability.",
+  "errors.owner.availability.notFound": "Availability data was not found.",
+  "errors.owner.availability.conflict":
+    "This period could not be updated because its status changed on the server.",
+  "errors.owner.availability.generic":
+    "Could not update this period. Please try again.",
+  "errors.owner.availability.load":
+    "Could not load the availability calendar. Please try again.",
+  "errors.owner.hall.unauthorized": "Log in to delete this hall.",
+  "errors.owner.hall.forbidden": "Only the hall owner can delete this hall.",
+  "errors.owner.hall.notFound":
+    "This hall was already deleted or was not found.",
+  "errors.owner.hall.conflict":
+    "This hall cannot be deleted because of a business rule conflict.",
+  "errors.owner.hall.generic":
+    "Could not delete the hall. Check your connection and try again.",
+  "errors.owner.delete.unauthorized":
+    "Log in to delete bookings for this hall.",
+  "errors.owner.delete.forbidden":
+    "Only the hall owner can delete these bookings.",
+  "errors.owner.delete.notFound":
+    "This booking was already deleted or was not found.",
+  "errors.owner.delete.conflict":
+    "This booking cannot be deleted because of a business rule conflict.",
+  "errors.owner.delete.generic": "Could not delete the booking. Please try again.",
+  "errors.owner.accept.generic": "Could not accept the booking request. Please try again.",
+  "errors.owner.accept.cancelled":
+    "The customer cancelled this request before it was accepted.",
+  "errors.owner.accept.conflict":
+    "This request can no longer be accepted because its status changed.",
+  "errors.owner.accept.unauthorized":
+    "Log in to accept booking requests for this hall.",
+  "errors.owner.accept.forbidden":
+    "Only the hall owner can accept these requests.",
+  "errors.owner.accept.notFound": "This booking request was not found.",
+  "errors.owner.reject.required": "A rejection reason is required.",
+  "errors.owner.reject.tooLong": "The rejection reason is too long.",
+  "errors.owner.reject.cancelled":
+    "The customer cancelled this request before it was rejected.",
+  "errors.owner.reject.conflict":
+    "This request can no longer be rejected because its status changed.",
+  "errors.owner.reject.unauthorized":
+    "Log in to reject booking requests for this hall.",
+  "errors.owner.reject.forbidden":
+    "Only the hall owner can reject these requests.",
+  "errors.owner.reject.notFound": "This booking request was not found.",
+  "errors.owner.reject.generic":
+    "Could not reject the booking request. Please try again.",
+  "errors.owner.publish.conflict":
+    "Could not publish because the period is no longer available.",
+  "errors.owner.publish.cancelled":
+    "The customer cancelled this booking before it was published.",
+  "errors.owner.publish.unauthorized":
+    "Log in to publish bookings for this hall.",
+  "errors.owner.publish.forbidden":
+    "Only the hall owner can publish these bookings.",
+  "errors.owner.publish.notFound": "This booking was not found.",
+  "errors.owner.publish.generic": "Could not publish the booking. Please try again.",
+  "errors.owner.notifications.load":
+    "Could not load booking requests. Please try again.",
+  "errors.owner.notifications.unauthorized":
+    "Log in to view booking requests for this hall.",
+  "errors.owner.notifications.forbidden":
+    "Only the hall owner can view these requests.",
+  "errors.owner.notifications.notFound":
+    "Booking requests for this hall were not found.",
+  "owner.audio.enable": "Enable sound",
+  "owner.audio.mute": "Mute sound",
+  "owner.audio.blockedHint":
+    "The browser blocked sound. Requests still appear here — you can enable the audio alert.",
+  "owner.audio.failed":
+    "Sound could not play on this device. Requests still appear as usual.",
 
   "amenity.ac": "Central AC",
   "amenity.parking": "VIP parking",

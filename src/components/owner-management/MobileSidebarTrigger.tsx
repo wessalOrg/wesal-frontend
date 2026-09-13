@@ -7,6 +7,8 @@ type MobileSidebarTriggerProps = {
   sidebarId: string;
   onOpen: () => void;
   onClose: () => void;
+  openLabelKey?: string;
+  closeLabelKey?: string;
 };
 
 export default function MobileSidebarTrigger({
@@ -14,6 +16,8 @@ export default function MobileSidebarTrigger({
   sidebarId,
   onOpen,
   onClose,
+  openLabelKey = "owner.management.openMenu",
+  closeLabelKey = "owner.management.closeMenu",
 }: MobileSidebarTriggerProps) {
   const t = useT();
 
@@ -33,9 +37,7 @@ export default function MobileSidebarTrigger({
         {isSidebarOpen ? <CloseIcon /> : <MenuIcon />}
       </span>
       <span>
-        {isSidebarOpen
-          ? t("owner.management.closeMenu")
-          : t("owner.management.openMenu")}
+        {isSidebarOpen ? t(closeLabelKey) : t(openLabelKey)}
       </span>
     </button>
   );
