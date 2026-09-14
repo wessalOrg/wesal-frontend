@@ -86,13 +86,13 @@ export function isInvalidAccountTypeError(error: ApiError): boolean {
   return message.includes("account type") || message.includes("accounttype");
 }
 
-export type RegisterConflictKind = "email" | "phone" | "generic";
+export type RegisterConflictKind = "email" | "generic";
 
 function conflictText(error: ApiError): string {
   return `${error.detail ?? ""} ${error.message}`.toLowerCase();
 }
 
-/** Detect duplicate email/phone (HTTP 409 Conflict) from registration. */
+/** Detect duplicate email (HTTP 409 Conflict) from registration. */
 export function getRegisterConflictKind(error: ApiError): RegisterConflictKind | null {
   const text = conflictText(error);
   const isConflictStatus = error.status === 409 || error.code === "Conflict";
@@ -104,7 +104,6 @@ export function getRegisterConflictKind(error: ApiError): RegisterConflictKind |
   if (!isConflictStatus && !looksLikeDuplicate) return null;
 
   if (text.includes("email")) return "email";
-  if (text.includes("phone")) return "phone";
   if (isConflictStatus) return "generic";
   return null;
 }
@@ -112,8 +111,6 @@ export function getRegisterConflictKind(error: ApiError): RegisterConflictKind |
 const REGISTER_FIELD_ALIASES: Record<string, string> = {
   fullname: "fullName",
   email: "email",
-  phonenumber: "phoneNumber",
-  phone: "phoneNumber",
   password: "password",
   confirmpassword: "confirmPassword",
 };
@@ -121,9 +118,9 @@ const REGISTER_FIELD_ALIASES: Record<string, string> = {
 /** Map backend validation keys onto registration form field keys. */
 export function mapRegisterApiFieldErrors(
   error: ApiError,
-): Partial<Record<"fullName" | "email" | "phoneNumber" | "password" | "confirmPassword", string>> {
+): Partial<Record<"fullName" | "email" | "password" | "confirmPassword", string>> {
   const mapped: Partial<
-    Record<"fullName" | "email" | "phoneNumber" | "password" | "confirmPassword", string>
+    Record<"fullName" | "email" | "password" | "confirmPassword", string>
   > = {};
 
   for (const [key, messages] of Object.entries(error.fieldErrors)) {
@@ -136,19 +133,19 @@ export function mapRegisterApiFieldErrors(
   return mapped;
 }
 
-const LOGIN_FIELD_ALIASES: Record<string, "identifier" | "password"> = {
-  identifier: "identifier",
-  email: "identifier",
-  phone: "identifier",
-  phonenumber: "identifier",
+const LOGIN_FIELD_ALIASES: Record<string, "email" | "password"> = {
+  identifier: "email",
+  email: "email",
+  phone: "email",
+  phonenumber: "email",
   password: "password",
 };
 
 /** Map backend login validation keys onto login form fields (US-LOGIN-02). */
 export function mapLoginApiFieldErrors(
   error: ApiError,
-): Partial<Record<"identifier" | "password", string>> {
-  const mapped: Partial<Record<"identifier" | "password", string>> = {};
+): Partial<Record<"email" | "password", string>> {
+  const mapped: Partial<Record<"email" | "password", string>> = {};
 
   for (const [key, messages] of Object.entries(error.fieldErrors)) {
     const normalized = key.toLowerCase().replace(/\./g, "");
